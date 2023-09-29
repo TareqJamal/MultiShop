@@ -20,7 +20,7 @@ Route::group(
         'middleware' => [ 'localeSessionRedirect', 'localizationRedirect', 'localeViewPath' ]
     ], function(){
     Route::get('/', function () {
-        dd( LaravelLocalization::getCurrentLocaleName()  );
-        return view('welcome');
+
+        return view('Admin.home.index');
     });
 });
