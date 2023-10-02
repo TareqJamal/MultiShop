@@ -3,7 +3,7 @@
 <head>
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <title>AdminLTE 3 | Log in</title>
+    <title>AdminLTE 3 | Forgot Password</title>
     <!-- Tell the browser to be responsive to screen width -->
     <meta name="viewport" content="width=device-width, initial-scale=1">
 
@@ -15,16 +15,10 @@
     <link rel="stylesheet" href="{{asset('admin')}}/plugins/icheck-bootstrap/icheck-bootstrap.min.css">
     <!-- Theme style -->
     <link rel="stylesheet" href="{{asset('admin')}}/dist/css/adminlte.min.css">
-    <link rel="stylesheet" href="{{asset('admin')}}/plugins/sweetalert2-theme-bootstrap-4/bootstrap-4.min.css">
-    <!-- Toastr -->
-    <link rel="stylesheet" href="{{asset('admin')}}/plugins/toastr/toastr.min.css">
-    <!-- Theme style -->
-    <link rel="stylesheet" href="{{asset('admin')}}/dist/css/adminlte.min.css">
     <!-- Google Font: Source Sans Pro -->
     <link href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,400i,700" rel="stylesheet">
     @include('Admin.Includes.css')
 </head>
-
 <body class="hold-transition login-page">
 <div class="login-box">
     <div class="login-logo">
@@ -33,47 +27,29 @@
     <!-- /.login-logo -->
     <div class="card">
         <div class="card-body login-card-body">
-            <p class="login-box-msg">Sign in to start your session</p>
-            <form id="formLogin" data-action="{{route('checkLogin')}}" method="Post">
+            <p class="login-box-msg">You forgot your password? Here you can easily retrieve a new password.</p>
+
+            <form id='forgetPasswordForm' data-action="{{route('checkEmailorPhone')}}" method="post">
                 @csrf
                 <div class="input-group mb-3">
-                    <input type="email" class="form-control" placeholder="Email" name="email">
+                    <input type="email" class="form-control" name="email" placeholder="Email">
                     <div class="input-group-append">
                         <div class="input-group-text">
                             <span class="fas fa-envelope"></span>
                         </div>
                     </div>
                 </div>
-                <div class="input-group mb-3">
-                        <select class="form-control" name="role">
-                            <option >Choose</option>
-                            @foreach(\App\Enum\UserTypes::cases() as $case)
-                            <option value="{{$case->value}}">{{__('enum.'.$case->value)}}</option>
-                            @endforeach
-                        </select>
-                </div>
-
-                <div class="input-group mb-3">
-                    <input type="password" class="form-control" placeholder="Password" name="password">
-                    <div class="input-group-append">
-                        <div class="input-group-text">
-                            <span class="fas fa-lock"></span>
-                        </div>
-                    </div>
-                </div>
                 <div class="row">
-                    <!-- /.col -->
-                    <div class="col-4">
-                        <button type="submit" id="btnlogin" class="btn btn-primary btn-block">Sign In</button>
+                    <div class="col-12">
+                        <button id="btn" type="submit" class="btn btn-danger btn-block">Check Email</button>
                     </div>
                     <!-- /.col -->
-                    <p class="mb-1">
-                        <a class="btn btn-danger" href="{{route("forgetPasswordPage")}}">I forgot my password</a>
-                    </p>
                 </div>
+                <p class="mt-3 mb-1">
+                    <a class="btn btn-primary" href="{{route('loginPage')}}">Login</a>
+                </p>
             </form>
-            <!-- /.social-auth-links -->
-            <br>
+
 
         </div>
         <!-- /.login-card-body -->
@@ -87,12 +63,11 @@
 <script src="{{asset('admin')}}/plugins/bootstrap/js/bootstrap.bundle.min.js"></script>
 <!-- AdminLTE App -->
 <script src="{{asset('admin')}}/dist/js/adminlte.min.js"></script>
-<script src="{{asset('admin')}}/plugins/jquery/jquery.min.js"></script>
 @include('Admin.Includes.js')
 <script>
     $(document).ready(function ()
     {
-        $('#formLogin').on('submit',function (e)
+        $('#forgetPasswordForm').on('submit',function (e)
         {
             var url = $(this).attr('data-action');
             e.preventDefault();
@@ -105,21 +80,20 @@
                 cache: false,
                 processData: false,
                 beforeSend: function () {
-                    document.getElementById("btnlogin").innerHTML = 'Logging...';
+                    document.getElementById("btn").innerHTML = 'Checking...';
                 },
                 success: function(response)
                 {
                     if(response.success)
                     {
                         toastr.success(response.success);
-                        window.location.href = response.redirect;
+                        window.location.href = '/recoverPassword/'+response.email;
                     }
                     if(response.error)
                     {
                         toastr.error(response.error);
+                        window.location.href = response.redirect;
                     }
-
-
 
                 },
                 error: function(response) {
