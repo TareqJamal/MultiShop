@@ -66,8 +66,14 @@
 <script src="https://cdnjs.cloudflare.com/ajax/libs/dropzone/5.9.2/min/dropzone.min.js"></script>
 <script src="{{asset('js')}}/jquery.min.js"></script>
 <script src="{{asset('js')}}/form-validator/jquery.form-validator.min.js"></script>
+<script src="{{asset('dist')}}/js/select2.min.js"></script>
 <script>
     $.validate({
         modules : 'date, security'
     });
 </script>
+{{--<script>--}}
+{{--    $(document).ready(function() {--}}
+{{--        $('.js-example-basic-multiple').select2();--}}
+{{--    });--}}
+{{--</script>--}}

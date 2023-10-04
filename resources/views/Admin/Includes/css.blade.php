@@ -37,6 +37,7 @@
 <link rel="stylesheet" href="{{asset('admin')}}/plugins/datatables-responsive/css/responsive.bootstrap4.min.css">
 <!-- Theme style -->
 <link rel="stylesheet" href="{{asset('admin')}}/dist/css/adminlte.min.css">
+<link rel="stylesheet" href="{{asset('dist')}}/css/select2.min.css">
 <!-- Google Font: Source Sans Pro -->
 <link href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,400i,700" rel="stylesheet">
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/dropzone/5.9.2/dropzone.min.css">

@@ -4,6 +4,7 @@ use App\Http\Controllers\Admin\AdminController;
 use App\Http\Controllers\Admin\AuthController;
 use App\Http\Controllers\Admin\CategoryController;
 use App\Http\Controllers\Admin\CouponController;
+use App\Http\Controllers\Admin\ProductController;
 use App\Http\Controllers\Admin\StoreController;
 use App\Http\Controllers\Admin\StoreTypeController;
 use Illuminate\Support\Facades\Route;
@@ -31,6 +32,7 @@ Route::group(
         Route::resource('stores',StoreController::class);
         Route::resource('categories',CategoryController::class);
         Route::resource('coupons',CouponController::class);
+        Route::resource('products',ProductController::class);
         Route::view('/login','Admin.auth.login')->name('loginPage');
         Route::view('/forgetPassword','Admin.auth.forget_password')->name('forgetPasswordPage');
         Route::get('/recoverPassword/{email}',[AuthController::class,'recoverPasswordPage']);

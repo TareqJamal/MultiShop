@@ -23,4 +23,8 @@ class Admin extends Authenticatable
     {
         return static::where('password',$password)->exists();
     }
+    public function products()
+    {
+        return $this->hasMany(Product::class , 'user_id');
+    }
 }

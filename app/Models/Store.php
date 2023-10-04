@@ -18,8 +18,13 @@ class Store extends Model implements TranslatableContract
     {
         return $this->belongsTo(StoreType::class,'stores_types_id');
     }
+
     public function categories()
     {
         return $this->hasMany(Category::class,'store_id');
     }
+     public function products()
+     {
+         return $this->hasMany(Product::class , 'store_id');
+     }
 }
