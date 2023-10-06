@@ -53,7 +53,7 @@
                 <option value="">Choose</option>
                 @foreach($stores as $store)
                     @if($store->storageCapacity != 0)
-                    <option value="{{$store->id}}">{{$store->name}}</option>
+                    <option value="{{$store->id}}">{{$store->name}} | {{$store->storageCapacity}}</option>
                     @endif
                 @endforeach
             </select>

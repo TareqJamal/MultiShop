@@ -13,12 +13,7 @@
                 <th>Name</th>
                 <th>Description</th>
                 <th>Image</th>
-                <th>Quantity</th>
-                <th>Price</th>
-                <th>Discount%</th>
-                <th>Category</th>
-                <th>Store</th>
-                <th>Added By</th>
+                <th>Price $</th>
                 <th>Actions</th>
             </tr>
             </thead>
@@ -30,12 +25,7 @@
                 <th>Name</th>
                 <th>Description</th>
                 <th>Image</th>
-                <th>Quantity</th>
-                <th>Price</th>
-                <th>Discount%</th>
-                <th>Category</th>
-                <th>Store</th>
-                <th>Added By</th>
+                <th>Price $</th>
                 <th>Actions</th>
             </tr>
             </tfoot>
@@ -56,12 +46,7 @@
                     {data: 'name', name: 'name'},
                     {data: 'description', name: 'description'},
                     {data: 'image', name: 'image'},
-                    {data: 'quantity', name: 'quantity'},
                     {data: 'price', name: 'price'},
-                    {data: 'discount', name: 'discount'},
-                    {data: 'category_id', name: 'category_id'},
-                    {data: 'story_id', name: 'story_id'},
-                    {data: 'user_id', name: 'user_id'},
                     {
                         data: 'actions', name: 'actions',
                         orderable: false,
@@ -82,36 +67,24 @@
             });
         });
 
-        $('#coupons').on('click','#btnEdit',function() {
-            var couponId = $(this).data('id');
-            var url = "{{route('coupons.edit',':couponId')}}"
-            url = url.replace(':couponId',couponId);
+        $('#products').on('click','#btnEdit',function() {
+            var productId = $(this).data('id');
+            var url = "{{route('products.edit',':productId')}}"
+            url = url.replace(':productId',productId);
             $.ajax({
                 url: url,
                 success: function (response) {
                     $('.modal-body').html(response.editForm);
                     $('#Modal').modal('show');
-                    $('#ModalLabel').text('Edit Coupon');
-                }
-            });
-        });
-        $('#coupons').on('click','#btnStatus',function() {
-            var couponId = $(this).data('id');
-            var url = "{{route('coupons.show',':couponId')}}"
-            url = url.replace(':couponId',couponId);
-            $.ajax({
-                url: url,
-                success: function (response) {
-                    toastr.success(response.success);
-                    myTable.ajax.reload();
+                    $('#ModalLabel').text('Edit Product');
                 }
             });
         });
 
-        $('#coupons').on('click','#btnDelete',function() {
-            var couponId = $(this).data('id');
-            var url = "{{route('coupons.destroy',':couponId')}}"
-            url = url.replace(':couponId',couponId);
+        $('#products').on('click','#btnDelete',function() {
+            var productId = $(this).data('id');
+            var url = "{{route('products.destroy',':productId')}}"
+            url = url.replace(':productId',productId);
             $.ajax({
                 url: url,
                 type: 'DELETE',
@@ -124,15 +97,57 @@
                 }
             });
         });
-    </script>
-    <script>
-
-    </script>
-    <script>
-
-        // Initiate form validation
-        $.validate({
-            modules: 'date, security'
+        $('#products').on('click','#btnView',function() {
+            var productId = $(this).data('id');
+            var url = "{{route('products.show',':productId')}}"
+            url = url.replace(':productId',productId);
+            $.ajax({
+                url: url,
+                type: 'Get',
+                headers: {
+                    'X-CSRF-TOKEN': '{{ csrf_token() }}' // Add CSRF token
+                },
+                success: function (response) {
+                    $('.modal-body').html(response.html);
+                    $('#Modal').modal('show');
+                    $('#ModalLabel').text('Details of Product');
+                }
+            });
         });
+        $('#products').on('click','#btnAttributes',function() {
+            var productId = $(this).data('id');
+            var url = "{{route('attributes.show',':productId')}}"
+            url = url.replace(':productId',productId);
+            $.ajax({
+                url: url,
+                type: 'Get',
+                headers: {
+                    'X-CSRF-TOKEN': '{{ csrf_token() }}' // Add CSRF token
+                },
+                success: function (response) {
+                    $('.modal-body').html(response.html);
+                    $('#Modal').modal('show');
+                    $('#ModalLabel').text('Attributes of Product');
+                }
+            });
+        });
+        $('#products').on('click','#btnImages',function() {
+            var productId = $(this).data('id');
+            var url = "{{route('images.show',':productId')}}"
+            url = url.replace(':productId',productId);
+            $.ajax({
+                url: url,
+                type: 'Get',
+                headers: {
+                    'X-CSRF-TOKEN': '{{ csrf_token() }}' // Add CSRF token
+                },
+                success: function (response) {
+                    $('.modal-body').html(response.html);
+                    $('#Modal').modal('show');
+                    $('#ModalLabel').text('Images of Product');
+                }
+            });
+        });
+
     </script>
 @endsection

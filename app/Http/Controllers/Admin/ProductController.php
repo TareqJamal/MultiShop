@@ -3,14 +3,17 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Enum\AttributesTypes;
+use App\Http\Actions\CategoryAction;
 use App\Http\Actions\ProductAction;
 use App\Http\Controllers\Controller;
 use App\Http\Traits\UploadImage;
 use App\Models\Category;
+use App\Models\Color;
 use App\Models\Coupon;
 use App\Models\Product;
 use App\Models\ProductAttributes;
 use App\Models\ProductImage;
+use App\Models\Size;
 use App\Models\Store;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -35,24 +38,16 @@ class ProductController extends Controller
             return DataTables::of($data)
                 ->addIndexColumn()
                 ->editColumn('image', 'Admin.products.datatable.image')
-                ->editColumn('discount', function ($row) {
-                    return $row->discount . '%';
-                })
-                ->editColumn('category_id', function ($row) {
-                    return $row->cateories?->name;
-                })
-                ->editColumn('story_id', function ($row) {
-                    return $row->stores?->name;
-                })
-                ->editColumn('user_id', function ($row) {
-                    return '<p style="font-weight: bold ; color: green">'.$row->admins?->name.'</p>';
-                })
                 ->addColumn('actions', function ($row) {
                     return
-                        '<button id="btnEdit" class="btn btn-warning" data-id=" ' . $row->id . ' ">Edit</button>
-                         <button id="btnDelete" class="btn btn-danger" data-id=" ' . $row->id . ' ">Delete</button>';
+                        '<button id="btnEdit" class="btn btn-warning" data-id=" ' . $row->id . ' "><i class="fa fa-pencil"></i> Edit</button>
+                         <button id="btnDelete" class="btn btn-danger" data-id=" ' . $row->id . ' "><i class="fa fa-trash"></i> Delete</button>
+                         <button id="btnView" class="btn btn-success" data-id=" ' . $row->id . ' "><i class="fa fa-eye"></i> View</button>
+                         <button id="btnAttributes" class="btn btn-dark" data-id=" ' . $row->id . ' "><i class="fa fa-paperclip"></i> Attributes</button>
+                         <button id="btnImages" class="btn btn-info" data-id=" ' . $row->id . ' "><i class="fa fa-image"></i> Images</button>
+                         ';
                 })
-                ->rawColumns(['actions', 'discount', 'category_id', 'story_id', 'user_id' , 'image'])
+                ->rawColumns(['actions', 'image'])
                 ->toJson();
         } else {
             return view($this->folderPath . 'index');
@@ -83,8 +78,8 @@ class ProductController extends Controller
     {
         $store = Store::findorfail($request->store_id);
         $storeQuantity = $store->storageCapacity;
-        if($request->quantity <= $storeQuantity ) {
-            $store->update(['storageCapacity'=>$storeQuantity - $request->quantity ]);
+        if ($request->quantity <= $storeQuantity) {
+            $store->update(['storageCapacity' => $storeQuantity - $request->quantity]);
             $postedData = $request->only($this->data);
             $product = $action->storeProduct($postedData);
             if ($request->hasFile('images')) {
@@ -98,36 +93,34 @@ class ProductController extends Controller
             }
             if ($request->has('sizes_clothes')) {
                 foreach ($request->sizes_clothes as $size) {
-                    ProductAttributes::create([
-                        'type' => AttributesTypes::sizeClothes->value,
+                    Size::create([
                         'name' => $size,
+                        'type' => AttributesTypes::sizeClothes->value,
                         'product_id' => $product->id
                     ]);
                 }
             }
             if ($request->has('sizes_shoes')) {
                 foreach ($request->sizes_shoes as $size) {
-                    ProductAttributes::create([
-                        'type' => AttributesTypes::sizeShoes->value,
+                    Size::create([
                         'name' => $size,
+                        'type' => AttributesTypes::sizeClothes->value,
                         'product_id' => $product->id
                     ]);
                 }
             }
             if ($request->has('colors')) {
-                foreach ($request->colors as $size) {
-                    ProductAttributes::create([
-                        'type' => AttributesTypes::color->value,
-                        'name' => $size,
+                foreach ($request->colors as $color) {
+                    Color::create([
+                        'name' => $color,
                         'product_id' => $product->id
                     ]);
                 }
             }
             return response()->json(['success' => 'Product Added Successfully']);
-        }
-        else{
+        } else {
             return response()->json([
-                'error' => 'Sorry,The Quantity is invalid try again' ,
+                'error' => 'Sorry,The Quantity is invalid try again',
             ]);
         }
 
@@ -136,32 +129,65 @@ class ProductController extends Controller
     /**
      * Display the specified resource.
      */
-    public function show(string $id)
+    public function show(string $id, ProductAction $action)
     {
-        //
+        if (\request()->ajax()) {
+            $product = $action->getProduct($id);
+            $returnHtml = view($this->folderPath . 'show')
+                ->with([
+                    'product' => $product,
+                ])->render();
+            return response()->json(['html' => $returnHtml]);
+
+        }
+
     }
 
     /**
      * Show the form for editing the specified resource.
      */
-    public function edit(string $id)
+    public function edit(string $id, ProductAction $action)
     {
-        //
+        if (\request()->ajax()) {
+            $product = $action->getProduct($id);
+            $categories = Category::all();
+            $stores = Store::all();
+            $returnHtml = view($this->folderPath . 'edit')
+                ->with([
+                    'product' => $product,
+                    'categories' => $categories,
+                    'stores' => $stores
+                ])->render();
+            return response()->json(['editForm' => $returnHtml]);
+        }
     }
 
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, string $id)
+    public function update(Request $request, string $id, ProductAction $action)
     {
-        //
+        $product = Product::findorfail($id);
+        $store = Store::findorfail($product->store_id);
+        if ($request->quantity <= $store->storageCapacity) {
+            $store->update(['storageCapacity' => $store->storageCapacity - $request->quantity]);
+            $updatedData = $request->only($this->data);
+            $action->updateProduct($id, $updatedData);
+            return response()->json(['success' => 'Product Added Successfully']);
+        } else {
+            return response()->json([
+                'error' => 'Sorry,The Quantity is invalid try again',
+            ]);
+        }
+
     }
 
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(string $id)
+    public function destroy(string $id, ProductAction $action)
     {
-        //
+        $action->delete($id);
+        return response()->json(['success' => 'Product Deleted Successfully']);
     }
 }

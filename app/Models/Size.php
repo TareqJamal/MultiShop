@@ -5,12 +5,15 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class ProductAttributes extends Model
+class Size extends Model
 {
     use HasFactory;
-    protected $fillable = ['size' , 'color' ,'product_id'];
+
+    protected $fillable = ['name', 'type', 'product_id'];
+
     public function products()
     {
-        return $this->belongsTo(Product::class , 'product_id');
+        return $this->hasMany(Product::class,'product_id');
     }
 }
+

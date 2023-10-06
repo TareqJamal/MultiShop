@@ -97,11 +97,5 @@
     <script>
 
     </script>
-    <script>
 
-        // Initiate form validation
-        $.validate({
-            modules: 'date, security'
-        });
-    </script>
 @endsection

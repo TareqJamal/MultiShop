@@ -28,12 +28,23 @@ class StoreController extends Controller
                 {
                     return $row->storeTypes->type;
                 })
+                ->editColumn('name',function ($row)
+                {
+                    if($row->storageCapacity == 0)
+                    {
+                        return '<p style="font-weight: bold; color: #d33636">' .$row->name.'</p>';
+                    }
+                    {
+                        return '<p style="font-weight: bold; color: green">' .$row->name.'</p>';
+                    }
+
+                })
                 ->addColumn('actions', function ($row) {
                     return
                         '<button id="btnEdit" class="btn btn-warning" data-id=" '.$row->id.' ">Edit</button>
                          <button id="btnDelete" class="btn btn-danger" data-id=" '.$row->id.' ">Delete</button>';
                 })
-                ->rawColumns(['actions','image'])
+                ->rawColumns(['actions','image','name'])
                 ->toJson();
         } else {
             return view($this->folderPath . 'index');
