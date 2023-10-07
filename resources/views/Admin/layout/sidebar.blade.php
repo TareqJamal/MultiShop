@@ -33,7 +33,13 @@
                 <li class="nav-item has-treeview menu-open">
                     <ul class="nav nav-treeview">
                         <li class="nav-item">
-                            <a href="{{route('admins.index')}}" class="nav-link active">
+                            <a href="{{route('main.index')}}" class="nav-link">
+                                <i class="far fa-circle nav-icon"></i>
+                                <p>Main</p>
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a href="{{route('admins.index')}}" class="nav-link">
                                 <i class="far fa-circle nav-icon"></i>
                                 <p>Admins</p>
                             </a>
@@ -48,6 +54,12 @@
                             <a href="{{route("stores.index")}}" class="nav-link">
                                 <i class="far fa-circle nav-icon"></i>
                                 <p>Stores </p>
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a href="{{route("storesStatus.index")}}" class="nav-link">
+                                <i class="far fa-circle nav-icon"></i>
+                                <p>Stores Status </p>
                             </a>
                         </li>
                         <li class="nav-item">

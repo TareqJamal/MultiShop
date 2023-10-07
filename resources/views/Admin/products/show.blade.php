@@ -28,6 +28,10 @@
         <td>{{ $product->discount }} %</td>
     </tr>
     <tr>
+        <th scope="row">Price After Discount</th>
+        <td>{{ $product->priceAfterDiscount }} $</td>
+    </tr>
+    <tr>
         <th scope="row">Quantity</th>
         <td>{{ $product->quantity }}</td>
     </tr>

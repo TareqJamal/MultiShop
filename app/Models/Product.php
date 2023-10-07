@@ -13,7 +13,7 @@ class Product extends Model implements TranslatableContract
     use Translatable;
 
     public $translatedAttributes = ['name', 'description'];
-    protected $fillable = ['image', 'price', 'discount', 'quantity', 'store_id', 'category_id', 'user_id'];
+    protected $fillable = ['image', 'price', 'discount', 'quantity','priceAfterDiscount', 'store_id', 'category_id', 'user_id'];
 
     public function images()
     {

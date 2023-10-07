@@ -25,7 +25,7 @@ class ProductController extends Controller
 
     public $folder = 'ProductImages';
     public string $folderPath = 'Admin.products.';
-    public array $data = ['name:en', 'description:en', 'name:ar', 'description:ar', 'image', 'price', 'discount', 'quantity', 'store_id', 'category_id', 'user_id'];
+    public array $data = ['name:en', 'description:en', 'name:ar', 'description:ar', 'image', 'price', 'discount','priceAfterDiscount', 'quantity', 'store_id', 'category_id', 'user_id'];
     public string $mainRoute = 'products';
 
     /**

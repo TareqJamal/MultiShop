@@ -21,7 +21,7 @@ class Auth
         if (\Illuminate\Support\Facades\Auth::guard('admin')->check() || \Illuminate\Support\Facades\Auth::guard('web')->check()) {
             return $next($request);
         } else {
-            return redirect(url('/login'));
+            return redirect(url('dashboard/login'));
         }
 
 //        if(Session::has('statusAdmin') || Session::has('statusSuper'))

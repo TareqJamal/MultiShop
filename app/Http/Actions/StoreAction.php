@@ -18,6 +18,10 @@ class StoreAction
         }
          return Store::create($data);
     }
+    public function getStrores()
+    {
+        return Store::all();
+    }
     public function getStore($id)
     {
         return Store::findorfail($id);

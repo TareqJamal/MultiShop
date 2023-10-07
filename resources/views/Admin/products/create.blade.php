@@ -34,6 +34,7 @@
             <input type="file" name="image" class="form-control" id="exampleInputEmail1"
                    data-validation="required">
         </div>
+            <input hidden name="priceAfterDiscount" value="">
         <div class="form-group">
             <label>
                 Category

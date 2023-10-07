@@ -22,6 +22,7 @@ class ProductAction
         {
             $data['image'] = $this->uploadImage($data['image'] , $this->folderPath);
         }
+        $data['priceAfterDiscount'] = $data['price']-(($data['price'] * $data['discount'])/100) ;
          return Product::create($data);
     }
     public function updateProduct($id,$data)
@@ -30,11 +31,15 @@ class ProductAction
         {
             $data['image'] = $this->uploadImage($data['image'],$this->folderPath);
         }
+        $data['priceAfterDiscount'] = $data['price']-(($data['price'] * $data['discount'])/100) ;
         $product = $this->getProduct($id);
         return $product->update($data);
     }
     public function delete($id)
     {
+        $product = $this->getProduct($id);
+        $store = Store::findorfail($product->store_id);
+        $store->update(['storageCapacity'=>$store->storageCapacity + $product->quantity]);
         return Product::destroy($id);
     }
     public function getProduct($id)
