@@ -38,4 +38,12 @@ class Product extends Model implements TranslatableContract
     {
         return $this->hasMany(ProductAttributes::class , 'product_id');
     }
+    public function reviews()
+    {
+        return $this->hasMany(Review::class,'product_id');
+    }
+    public function carts()
+    {
+        return $this->belongsToMany(Cart::class)->withPivot('product_quantity', 'product_size', 'product_color');
+    }
 }

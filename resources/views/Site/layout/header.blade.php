@@ -12,12 +12,14 @@
             <div class="d-inline-flex align-items-center">
                 <div class="btn-group">
                     <button type="button" class="btn btn-sm btn-light dropdown-toggle" data-toggle="dropdown">
-                       @if(\Illuminate\Support\Facades\Session::has('webSiteStatus'))
-                           {{\Illuminate\Support\Facades\Auth::guard('customer')->user()->firstName}}
+                        @if(\Illuminate\Support\Facades\Session::has('webSiteStatus'))
+                            {{\Illuminate\Support\Facades\Auth::guard('customer')->user()->firstName}}
                         @endif
                     </button>
                     <div class="dropdown-menu dropdown-menu-right">
-                     <a href="{{route('WebsiteLogout')}}">   <button class="dropdown-item" type="button">Logout</button></a>
+                        <a href="{{route('WebsiteLogout')}}">
+                            <button class="dropdown-item" type="button">Logout</button>
+                        </a>
                     </div>
                 </div>
                 <div class="btn-group mx-2">
@@ -90,24 +92,10 @@
             <nav class="collapse position-absolute navbar navbar-vertical navbar-light align-items-start p-0 bg-light"
                  id="navbar-vertical" style="width: calc(100% - 30px); z-index: 999;">
                 <div class="navbar-nav w-100">
-                    <div class="nav-item dropdown dropright">
-                        <a href="#" class="nav-link dropdown-toggle" data-toggle="dropdown">Dresses <i
-                                class="fa fa-angle-right float-right mt-1"></i></a>
-                        <div class="dropdown-menu position-absolute rounded-0 border-0 m-0">
-                            <a href="" class="dropdown-item">Men's Dresses</a>
-                            <a href="" class="dropdown-item">Women's Dresses</a>
-                            <a href="" class="dropdown-item">Baby's Dresses</a>
-                        </div>
-                    </div>
-                    <a href="" class="nav-item nav-link">Shirts</a>
-                    <a href="" class="nav-item nav-link">Jeans</a>
-                    <a href="" class="nav-item nav-link">Swimwear</a>
-                    <a href="" class="nav-item nav-link">Sleepwear</a>
-                    <a href="" class="nav-item nav-link">Sportswear</a>
-                    <a href="" class="nav-item nav-link">Jumpsuits</a>
-                    <a href="" class="nav-item nav-link">Blazers</a>
-                    <a href="" class="nav-item nav-link">Jackets</a>
-                    <a href="" class="nav-item nav-link">Shoes</a>
+                    @foreach($categories as $category)
+                        <a href="" class="nav-item nav-link">{{$category->name}}</a>
+                    @endforeach
+
                 </div>
             </nav>
         </div>
@@ -141,10 +129,10 @@
                             <span class="badge text-secondary border border-secondary rounded-circle"
                                   style="padding-bottom: 2px;">0</span>
                         </a>
-                        <a href="" class="btn px-0 ml-3">
+                        <a href="{{route('cart.index')}}" class="btn px-0 ml-3">
                             <i class="fas fa-shopping-cart text-primary"></i>
                             <span class="badge text-secondary border border-secondary rounded-circle"
-                                  style="padding-bottom: 2px;">0</span>
+                                  style="padding-bottom: 2px;">{{$cartNumber ?? 0}}</span>
                         </a>
                     </div>
                 </div>

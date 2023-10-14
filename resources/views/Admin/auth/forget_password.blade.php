@@ -22,7 +22,7 @@
 <body class="hold-transition login-page">
 <div class="login-box">
     <div class="login-logo">
-        <a href="../../index2.html"><b>Admin</b>LTE</a>
+        <a href="../../index2.html"><b>DashBoard </b>Multi-Shop</a>
     </div>
     <!-- /.login-logo -->
     <div class="card">
@@ -41,7 +41,7 @@
                 </div>
                 <div class="row">
                     <div class="col-12">
-                        <button id="btn" type="submit" class="btn btn-danger btn-block">Check Email</button>
+                        <button id="btn" type="submit" class="btn btn-danger btn-block">Send Email</button>
                     </div>
                     <!-- /.col -->
                 </div>
@@ -65,38 +65,36 @@
 <script src="{{asset('admin')}}/dist/js/adminlte.min.js"></script>
 @include('Admin.Includes.js')
 <script>
-    $(document).ready(function ()
-    {
-        $('#forgetPasswordForm').on('submit',function (e)
-        {
+    $(document).ready(function () {
+        $('#forgetPasswordForm').on('submit', function (e) {
             var url = $(this).attr('data-action');
             e.preventDefault();
             $.ajax({
-                url : url,
-                method : "POST",
-                data : new FormData(this),
+                url: url,
+                method: "POST",
+                data: new FormData(this),
                 dataType: 'JSON',
                 contentType: false,
                 cache: false,
                 processData: false,
                 beforeSend: function () {
-                    document.getElementById("btn").innerHTML = 'Checking...';
+                    document.getElementById("btn").innerHTML = 'Sending Email...';
                 },
-                success: function(response)
-                {
-                    if(response.success)
-                    {
-                        toastr.success(response.success);
-                        window.location.href = '/recoverPassword/'+response.email;
+                success: function (response) {
+                    if (response.success) {
+                        Swal.fire(
+                            response.success,
+                            'Reset Your Password Now',
+                            'success'
+                        )
                     }
-                    if(response.error)
-                    {
+                    if (response.error) {
                         toastr.error(response.error);
                         window.location.href = response.redirect;
                     }
 
                 },
-                error: function(response) {
+                error: function (response) {
                     console.log(response);
                 }
             })

@@ -13,3 +13,7 @@
 
 <!-- Customized Bootstrap Stylesheet -->
 <link href="{{asset('site')}}/css/style.css" rel="stylesheet">
+
+<link rel="stylesheet" href="{{asset('admin')}}/plugins/sweetalert2-theme-bootstrap-4/bootstrap-4.min.css">
+<!-- Toastr -->
+<link rel="stylesheet" href="{{asset('admin')}}/plugins/toastr/toastr.min.css">

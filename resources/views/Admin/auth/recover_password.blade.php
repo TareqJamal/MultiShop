@@ -22,14 +22,22 @@
 <body class="hold-transition login-page">
 <div class="login-box">
     <div class="login-logo">
-        <a href="{{route('loginPage')}}"><b>Admin</b>LTE</a>
+        <a href="{{route('loginPage')}}"><b>DashBoard </b>Multi-Shop</a>
     </div>
     <!-- /.login-logo -->
     <div class="card">
         <div class="card-body login-card-body">
             <p class="login-box-msg">You are only one step a way from your new password, recover your password now.</p>
-            <form id="recoverPasswordForm" data-action="{{route('recoverPassword',$email)}}" method="post">
+            <form id="recoverPasswordForm" data-action="{{route('recoverPassword')}}" method="post">
                 @csrf
+                <div class="input-group mb-3">
+                    <input type="email" class="form-control" name="email" placeholder="Your Email">
+                    <div class="input-group-append">
+                        <div class="input-group-text">
+                            <span class="fas fa-envelope"></span>
+                        </div>
+                    </div>
+                </div>
                 <div class="input-group mb-3">
                     <input type="password" class="form-control" name="newPassword" placeholder="New Password">
                     <div class="input-group-append">
@@ -54,9 +62,9 @@
                 </div>
             </form>
 
-            <p class="mt-3 mb-1">
-                <a class="btn btn-success href="{{route('loginPage')}}">Login</a>
-            </p>
+{{--            <p class="mt-3 mb-1">--}}
+{{--                <a class="btn btn-danger href="{{route('loginPage')}}">Login</a>--}}
+{{--            </p>--}}
         </div>
         <!-- /.login-card-body -->
     </div>

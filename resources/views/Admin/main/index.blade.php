@@ -8,7 +8,7 @@
             <!-- small box -->
             <div class="small-box bg-info">
                 <div class="inner">
-                    <h3>{{$products}}</h3>
+                    <h3>{{$products->count()}}</h3>
                     <p>Products</p>
                 </div>
                 <div class="icon">
@@ -21,7 +21,7 @@
             <!-- small box -->
             <div class="small-box bg-dark">
                 <div class="inner">
-                    <h3>{{$categories}}</h3>
+                    <h3>{{$categories->count()}}</h3>
                     <p>Categories</p>
                 </div>
                 <div class="icon">

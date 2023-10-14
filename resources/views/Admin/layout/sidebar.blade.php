@@ -34,19 +34,19 @@
                     <ul class="nav nav-treeview">
                         <li class="nav-item">
                             <a href="{{route('main.index')}}" class="nav-link">
-                                <i class="far fa-circle nav-icon"></i>
+                                <i class="far fa-house-user nav-icon"></i>
                                 <p>Main</p>
                             </a>
                         </li>
                         <li class="nav-item">
                             <a href="{{route('admins.index')}}" class="nav-link">
-                                <i class="far fa-circle nav-icon"></i>
+                                <i class="far fa-user nav-icon"></i>
                                 <p>Admins</p>
                             </a>
                         </li>
                         <li class="nav-item">
                             <a href="{{route("stores-types.index")}}" class="nav-link">
-                                <i class="far fa-circle nav-icon"></i>
+                                <i class="far fa-typo3 nav-icon"></i>
                                 <p>Stores Types</p>
                             </a>
                         </li>
@@ -58,7 +58,7 @@
                         </li>
                         <li class="nav-item">
                             <a href="{{route("storesStatus.index")}}" class="nav-link">
-                                <i class="far fa-circle nav-icon"></i>
+                                <i class="fa fa-shopping-basket nav-icon"></i>
                                 <p>Stores Status </p>
                             </a>
                         </li>
@@ -70,19 +70,33 @@
                         </li>
                         <li class="nav-item">
                             <a href="{{route("coupons.index")}}" class="nav-link">
-                                <i class="far fa-circle nav-icon"></i>
+                                <i class="fa fa-percentage nav-icon"></i>
                                 <p>Coupons </p>
                             </a>
                         </li>
                         <li class="nav-item">
                             <a href="{{route("products.index")}}" class="nav-link">
-                                <i class="far fa-circle nav-icon"></i>
+
+                                <i class="far fa-product-hunt nav-icon"></i>
                                 <p>Products </p>
                             </a>
                         </li>
                         <li class="nav-item">
+                            <a href="{{route("carts.index")}}" class="nav-link">
+
+                                <i class="fa fa-cart-arrow-down nav-icon"></i>
+                                <p>Carts </p>
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a href="{{route("reviewsDashboard.index")}}" class="nav-link">
+                                <i class="far fa-comment nav-icon"></i>
+                                <p>Reviews </p>
+                            </a>
+                        </li>
+                        <li class="nav-item">
                             <a href="{{route('logout')}}" class="nav-link">
-                                <i class="far fa-circle nav-icon"></i>
+                                <i class="fa fa-arrow-right nav-icon"></i>
                                 <p>Logout</p>
                             </a>
                         </li>

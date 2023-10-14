@@ -12,7 +12,7 @@ class MainAction
 {
     public function counts()
     {
-        $countProducts = Product::count();
+        $countProducts = Product::all()->count();
         $countStores = Store::count();
         $countAdmin = Admin::count();
         $countCoupon = Coupon::count();

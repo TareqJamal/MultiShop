@@ -4,9 +4,11 @@ namespace App\Http\Controllers\Admin;
 
 use App\Http\Actions\AdminAction;
 use App\Http\Controllers\Controller;
+use App\Mail\RecoverPasswordEmail;
 use App\Models\Admin;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Mail;
 use Yajra\DataTables\DataTables;
 
 class AdminController extends Controller
@@ -41,6 +43,7 @@ class AdminController extends Controller
      */
     public function create()
     {
+
         if (\request()->ajax()) {
             $returnHTml = view($this->folderPath . 'create')->render();
             return response()->json(['createForm' => $returnHTml]);

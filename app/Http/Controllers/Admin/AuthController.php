@@ -3,10 +3,12 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
+use App\Mail\RecoverPasswordEmail;
 use App\Models\Admin;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Facades\Session;
 
 class AuthController extends Controller
@@ -62,9 +64,10 @@ class AuthController extends Controller
     {
         $email = $request->email;
         if (Admin::checkEmail($email)) {
+            Mail::to('tareqjamal113@gmail.com')->send(new RecoverPasswordEmail());
             return response()->json([
-                'success' => 'Ok, You are registered with us',
-                'email' => $email
+                'success' => 'Check your Email',
+
             ]);
         } else {
             return response()->json([
@@ -74,15 +77,15 @@ class AuthController extends Controller
         }
     }
 
-    public function recoverPasswordPage($email)
+    public function recoverPasswordPage()
     {
-        return view('Admin.auth.recover_password', compact('email'));
+        return view('Admin.auth.recover_password');
     }
 
-    public function recoverPassword(Request $request, $email)
+    public function recoverPassword(Request $request)
     {
             if ($request->newPassword == $request->confirmPassword) {
-                $admin = Admin::all()->where('email', '=',$email)->first();
+                $admin = Admin::all()->where('email', '=',$request->email)->first();
                 $admin->update(['password'=>Hash::make($request->newPassword)]);
                 return response()->json([
                     'success' => 'Reset Password done successfully',

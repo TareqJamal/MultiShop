@@ -15,5 +15,13 @@ class Customer extends Authenticatable
     {
         return Customer::where('email',$email)->exists();
     }
+    public function reviews()
+    {
+        return $this->hasMany(Review::class,'customer_id',);
+    }
+    public function carts()
+    {
+        return $this->belongsTo(Cart::class, 'customer_id');
+    }
 
 }
