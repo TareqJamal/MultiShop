@@ -40,19 +40,26 @@
                         </li>
                         <li class="nav-item">
                             <a href="{{route('admins.index')}}" class="nav-link">
-                                <i class="far fa-user nav-icon"></i>
+                                <i class="fa fa-people-carry nav-icon"></i>
+
                                 <p>Admins</p>
                             </a>
                         </li>
                         <li class="nav-item">
+                            <a href="{{route('customersDashboard.index')}}" class="nav-link">
+                                <i class="far fa-user nav-icon"></i>
+                                <p>Customers</p>
+                            </a>
+                        </li>
+                        <li class="nav-item">
                             <a href="{{route("stores-types.index")}}" class="nav-link">
-                                <i class="far fa-typo3 nav-icon"></i>
+                                <i class="fa fa-warehouse nav-icon"></i>
                                 <p>Stores Types</p>
                             </a>
                         </li>
                         <li class="nav-item">
                             <a href="{{route("stores.index")}}" class="nav-link">
-                                <i class="far fa-circle nav-icon"></i>
+                                <i class="fa fa-store nav-icon"></i>
                                 <p>Stores </p>
                             </a>
                         </li>
@@ -77,7 +84,7 @@
                         <li class="nav-item">
                             <a href="{{route("products.index")}}" class="nav-link">
 
-                                <i class="far fa-product-hunt nav-icon"></i>
+                                <i class="fa fa-shopping-bag nav-icon"></i>
                                 <p>Products </p>
                             </a>
                         </li>
@@ -92,6 +99,12 @@
                             <a href="{{route("reviewsDashboard.index")}}" class="nav-link">
                                 <i class="far fa-comment nav-icon"></i>
                                 <p>Reviews </p>
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a href="{{route("contactsDashboard.index")}}" class="nav-link">
+                                <i class="fa fa-phone nav-icon"></i>
+                                <p>Contacts </p>
                             </a>
                         </li>
                         <li class="nav-item">

@@ -5,7 +5,9 @@ use App\Http\Controllers\Admin\AttributeController;
 use App\Http\Controllers\Admin\AuthController;
 use App\Http\Controllers\Admin\CategoryController;
 use App\Http\Controllers\Admin\ColorController;
+use App\Http\Controllers\Admin\ContactDashboardContoller;
 use App\Http\Controllers\Admin\CouponController;
+use App\Http\Controllers\Admin\CustomerDashboardContoller;
 use App\Http\Controllers\Admin\ImageController;
 use App\Http\Controllers\Admin\MainController;
 use App\Http\Controllers\Admin\ProductController;
@@ -61,6 +63,8 @@ Route::group(
             Route::resource('images', ImageController::class);
             Route::resource('carts', \App\Http\Controllers\Admin\CartController::class);
             Route::resource('reviewsDashboard', ReviewDashboardController::class);
+            Route::resource('contactsDashboard', ContactDashboardContoller::class);
+            Route::resource('customersDashboard', CustomerDashboardContoller::class);
             Route::get('/logout', [AuthController::class, 'logout'])->name('logout');
         });
         Route::view('/login', 'Admin.auth.login')->name('loginPage');

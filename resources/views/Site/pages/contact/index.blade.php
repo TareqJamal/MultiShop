@@ -2,6 +2,11 @@
 @section('title')
     Contact
 @endsection
+<head>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+
+</head>
 @section('content')
     <div class="container-fluid">
         <div class="row px-xl-5">
@@ -19,24 +24,25 @@
             <div class="col-lg-7 mb-5">
                 <div class="contact-form bg-light p-30">
                     <div id="success"></div>
-                    <form name="sentMessage" id="contactForm" novalidate="novalidate">
+                    <form  id="formContact" novalidate="novalidate" data-action="{{route('contact.store')}}">
+                        @csrf
                         <div class="control-group">
                             <input type="text" class="form-control" id="name" placeholder="Your Name"
-                                   required="required" data-validation-required-message="Please enter your name" />
+                                   required="required" name="name" data-validation-required-message="Please enter your name" />
                             <p class="help-block text-danger"></p>
                         </div>
                         <div class="control-group">
                             <input type="email" class="form-control" id="email" placeholder="Your Email"
-                                   required="required" data-validation-required-message="Please enter your email" />
+                                   required="required" name="email" data-validation-required-message="Please enter your email" />
                             <p class="help-block text-danger"></p>
                         </div>
                         <div class="control-group">
                             <input type="text" class="form-control" id="subject" placeholder="Subject"
-                                   required="required" data-validation-required-message="Please enter a subject" />
+                                   required="required" name="subject" data-validation-required-message="Please enter a subject" />
                             <p class="help-block text-danger"></p>
                         </div>
                         <div class="control-group">
-                            <textarea class="form-control" rows="8" id="message" placeholder="Message"
+                            <textarea class="form-control" name="message" rows="8" id="message" placeholder="Message"
                                       required="required"
                                       data-validation-required-message="Please enter your message"></textarea>
                             <p class="help-block text-danger"></p>
@@ -63,3 +69,35 @@
         </div>
     </div>
 @endsection
+<script>
+    $(document).ready(function () {
+        $('#formContact').on('submit', function (e) {
+            var url = $(this).attr('data-action');
+            e.preventDefault();
+            $.ajax({
+                url: url,
+                method: "POST",
+                data: new FormData(this),
+                dataType: 'JSON',
+                contentType: false,
+                cache: false,
+                processData: false,
+                success: function (response) {
+                    Swal.fire(
+                        response.success,
+                        'Enjoy With The Store',
+                        'success'
+                    )
+                    formContact.reset();
+                    // toastr.success(response.success);
+                },
+                error: function (response) {
+                    toastr.warning('Something is wrong , Please Try Again')
+                }
+            })
+
+
+        })
+
+    });
+</script>

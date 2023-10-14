@@ -1,20 +1,39 @@
 <?php
 
-namespace App\Http\Controllers\Site;
+namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
 use App\Models\Contact;
+use App\Models\Customer;
 use Illuminate\Http\Request;
+use Yajra\DataTables\DataTables;
 
-class ContactController extends Controller
+class CustomerDashboardContoller extends Controller
 {
-    public $data = ['name', 'email', 'message', 'subject'];
+    public string $folderPath = 'Admin.customers.';
     /**
      * Display a listing of the resource.
      */
     public function index()
     {
-        return view('Site.pages.contact.index');
+        if (\request()->ajax()) {
+            $data =Customer::all();
+            return DataTables::of($data)
+                ->addIndexColumn()
+                ->editColumn('created_at',function ($row)
+                {
+                    return $row->created_at->format('Y-m-d');
+                })
+                ->editColumn('image',$this->folderPath.'datatable.image')
+                ->addColumn('name',function ($row)
+                {
+                    return $row->firstName . $row->lastName;
+                })
+                ->rawColumns(['image', 'name'])
+                ->toJson();
+        } else {
+            return view($this->folderPath . 'index');
+        }
     }
 
     /**
@@ -22,7 +41,7 @@ class ContactController extends Controller
      */
     public function create()
     {
-
+        //
     }
 
     /**
@@ -30,13 +49,7 @@ class ContactController extends Controller
      */
     public function store(Request $request)
     {
-        $postedData = $request->only($this->data);
-        Contact::create($postedData);
-        return response()->json([
-            'success'=>'Thanks For Your Contact'
-        ]);
-
-
+        //
     }
 
     /**

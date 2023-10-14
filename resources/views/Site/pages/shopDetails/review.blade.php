@@ -4,7 +4,7 @@
         <img src="{{asset('')}}{{$review->customers->image}}" alt="Image"
              class="img-fluid mr-3 mt-1" style="width: 45px;">
         <div class="media-body">
-            <h6>{{$review->customers->firstName}}{{$review->customers->lastName}}<small> - <i>{{$review->created_at->format('Y-m-d')}}</i></small></h6>
+            <h6>{{ $review->name ?? $review->customers->firstName.$review->customers->lastName}}<small> - <i>{{$review->created_at->format('Y-m-d')}}</i></small></h6>
             <div class="text-primary mb-2">
                 <i class="fas fa-star"></i>
                 <i class="fas fa-star"></i>

@@ -202,18 +202,6 @@
                                 </div>
                                 <div class="col-md-6">
                                     <h4 class="mb-4">Leave a review</h4>
-                                    <small>Your email address will not be published. Required fields are marked
-                                        *</small>
-                                    <div class="d-flex my-3">
-                                        <p class="mb-0 mr-2">Your Rating * :</p>
-                                        <div class="text-primary">
-                                            <i class="far fa-star"></i>
-                                            <i class="far fa-star"></i>
-                                            <i class="far fa-star"></i>
-                                            <i class="far fa-star"></i>
-                                            <i class="far fa-star"></i>
-                                        </div>
-                                    </div>
                                     <form id="formReveiw" data-action="{{route('review.store')}}" method="Post">
                                         @csrf
                                         <div class="form-group">
@@ -305,9 +293,14 @@
                 cache: false,
                 processData: false,
                 success: function (response) {
-                    toastr.success(response.success);
+                    Swal.fire(
+                        response.success,
+                        'Enjoy With The Store',
+                        'success'
+                    )
                     $('.review').html(response.html);
                     $('.numberReviews').html('Reviews ' + response.numberReviews)
+                    formReveiw.reset();
                 },
                 error: function (response) {
                     toastr.warning('Something is wrong , Please Try Again')

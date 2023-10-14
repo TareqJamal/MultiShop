@@ -23,6 +23,10 @@ class MainController extends Controller
                 'admins' => $data['countAdmin'],
                 'coupons' => $data['countCoupon'],
                 'categories' => $data['countCategory'],
+                'carts' => $data['countCarts'],
+                'customers' => $data['countCustomers'],
+                'reviews' => $data['countReviews'],
+                'contacts' => $data['countContacts'],
             ]);
 
     }
