@@ -44,9 +44,9 @@
                             </td>
                             <td class="align-middle">${{$cart->total}}  </td>
                             <td class="align-middle">
-                                <button class="btn btn-sm btn-success DeleteCart" data-id="{{$cart->id}}">
+                                <a href="{{route('checkout.show',$cart->id)}}" class="btn btn-sm btn-success continueToCheckout">
                                     <i class="fa fa-check"> Continue to Checkout</i>
-                                </button>
+                                </a>
                                 <button class="btn btn-sm btn-danger DeleteCart" data-id="{{$cart->id}}">
                                     <i class="fa fa-times"></i>
                                 </button>
@@ -63,15 +63,6 @@
                 </table>
             </div>
             <div class="col-lg-4">
-                <form id="applyCoupon" class="mb-30" method="Post" data-action="{{route('applyCoupon.store')}}">
-                    @csrf
-                    <div class="input-group">
-                        <input type="text" class="form-control border-0 p-4" name="code" placeholder="Coupon Code">
-                        <div class="input-group-append">
-                            <button type="submit" class="btn btn-primary">Apply Coupon</button>
-                        </div>
-                    </div>
-                </form>
                 <h5 class="section-title position-relative text-uppercase mb-3"><span class="bg-secondary pr-3">Cart Summary</span>
                 </h5>
                 <div class="bg-light p-30 mb-5 cartSummery">
@@ -86,8 +77,8 @@
                             <h5>Total</h5>
                             <h5>{{$subTotal}}</h5>
                         </div>
-                        <button class="btn btn-block btn-primary font-weight-bold my-3 py-3">Proceed All Products To Checkout
-                        </button>
+                        <a href="{{route('checkout.index')}}" class="btn btn-block btn-primary font-weight-bold my-3 py-3">Proceed All Products To Checkout
+                        </a>
                     </div>
                 </div>
             </div>
@@ -113,49 +104,6 @@
                 }
             })
         });
-    });
-    $(document).ready(function ()
-    {
-        $('#applyCoupon').on('submit',function (e)
-        {
-            var url = $(this).attr('data-action');
-            e.preventDefault();
-            $.ajax({
-                url : url,
-                method : "POST",
-                data : new FormData(this),
-                dataType: 'JSON',
-                contentType: false,
-                cache: false,
-                processData: false,
-                success: function(response)
-                {
-                    if(response.success)
-                    {
-                        Swal.fire(
-                            response.success,
-                            'Enjoy with Discount',
-                            'success'
-                        )
-                        $('.cartSummery').html(response.html)
-                    }
-                    if(response.error)
-                    {
-                        Swal.fire(
-                            response.error,
-                            'Try Another Code ',
-                            'error'
-                        )
-                    }
-                },
-                error: function(response) {
-                    toastr.warning('Something is wrong , Please Try Again')
-                }
-            })
-
-
-        })
-
     });
 
 

@@ -22,6 +22,7 @@ use App\Http\Controllers\Site\CheckoutController;
 use App\Http\Controllers\Site\ContactController;
 use App\Http\Controllers\Site\CustomerController;
 use App\Http\Controllers\Site\HomeSiteController;
+use App\Http\Controllers\Site\OrderContoller;
 use App\Http\Controllers\Site\RegiserController;
 use App\Http\Controllers\Site\ReveiwController;
 use App\Http\Controllers\Site\ShopController;
@@ -85,6 +86,7 @@ Route::group(
             Route::resource('review', ReveiwController::class);
             Route::resource('shopDetails', ShopDetailsController::class);
             Route::resource('applyCoupon',ApplyCouponContoller::class);
+            Route::resource('orders',OrderContoller::class);
             Route::get('/logout',[WebSiteAuthController::class,'logout'])->name('WebsiteLogout');
         });
         Route::resource('home', HomeSiteController::class);

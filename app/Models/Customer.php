@@ -23,5 +23,9 @@ class Customer extends Authenticatable
     {
         return $this->belongsTo(Cart::class, 'customer_id');
     }
+    public function orders()
+    {
+        return $this->belongsTo(Order::class,'customer_id');
+    }
 
 }

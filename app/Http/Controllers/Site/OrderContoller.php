@@ -2,22 +2,23 @@
 
 namespace App\Http\Controllers\Site;
 
-use App\Http\Actions\CheckoutAction;
+use App\Http\Actions\OrderAction;
 use App\Http\Controllers\Controller;
-use App\Models\Cart;
-use App\Models\Product;
+use App\Models\Order;
+use App\Models\OrderDetails;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
-class CheckoutController extends Controller
+class OrderContoller extends Controller
 {
+    public $data = ['customer_id', 'addressLine_1', 'addressLine_2', 'country', 'city', 'state','totalPrice', 'zipCode', 'paymentMethod'];
+
     /**
      * Display a listing of the resource.
      */
     public function index()
     {
-        $orderProducts = Cart::all()->where('customer_id', Auth::guard('customer')->user()->id);
-        return view('Site.pages.checkout.index')->with(['orderProducts' => $orderProducts]);
+        //
     }
 
     /**
@@ -31,25 +32,20 @@ class CheckoutController extends Controller
     /**
      * Store a newly created resource in storage.
      */
-    public function store(Request $request)
+    public function store(Request $request , OrderAction $action)
     {
-        //
+        $postedData = $request->only($this->data);
+        $action->storeOrder($postedData , $request);
+        return response()->json(['success'=>'Order Make Successfully']);
+
     }
 
     /**
      * Display the specified resource.
      */
-    public function show(string $id, CheckoutAction $action)
+    public function show(string $id)
     {
-        $cart = $action->getCart($id);
-        $product = Product::findorfail($cart->product_id);
-        return view('Site.pages.checkout.index')->with(
-            [
-                'cart' => $cart,
-                'product' => $product
-            ]);
-
-
+        //
     }
 
     /**

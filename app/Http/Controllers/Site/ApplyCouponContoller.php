@@ -13,7 +13,7 @@ class ApplyCouponContoller extends Controller
 {
     public array $data = ['code'];
     public string $mainRoute = 'applyCoupon';
-    public string $folderPath = 'Site.pages.cart.';
+    public string $folderPath = 'Site.pages.checkout.';
 
     /**
      * Display a listing of the resource.
@@ -42,8 +42,7 @@ class ApplyCouponContoller extends Controller
                 $value = $getCoupon->percentage;
                 $getCoupon->status = 1;
                 $getCoupon->save();
-                $subTotal = $action->getCarts(Auth::guard('customer')->user()->id);
-                $returnHtml = view($this->folderPath . 'cartSummery')->with(['value' => $value, 'subTotal' => $subTotal['subTotal']])->render();
+                $returnHtml = view($this->folderPath . 'orderSummery')->with(['value' => $value, 'subTotal' => $request->subTotal])->render();
                 return response()->json([
                     'html' => $returnHtml,
                     'success' => 'Coupon Applied Successfully',
