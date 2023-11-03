@@ -40,8 +40,9 @@ class StoresStatusController extends Controller
      */
     public function show(string $id)
     {
-        $products = Product::all()->where('store_id',$id);
-       return view($this->folderPath.'products')->with(['products'=>$products]);
+
+        $data = Product::where('store_id','=',$id)->get();
+       return view($this->folderPath.'products',compact('data'));
 
     }
 

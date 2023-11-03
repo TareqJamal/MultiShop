@@ -21,6 +21,7 @@ use App\Http\Controllers\Site\CartController;
 use App\Http\Controllers\Site\CheckoutController;
 use App\Http\Controllers\Site\ContactController;
 use App\Http\Controllers\Site\CustomerController;
+use App\Http\Controllers\Site\FilterController;
 use App\Http\Controllers\Site\HomeSiteController;
 use App\Http\Controllers\Site\OrderContoller;
 use App\Http\Controllers\Site\RegiserController;
@@ -71,6 +72,8 @@ Route::group(
         Route::view('/login', 'Admin.auth.login')->name('loginPage');
         Route::view('/forgetPassword', 'Admin.auth.forget_password')->name('forgetPasswordPage');
         Route::get('/recoverPassword', [AuthController::class, 'recoverPasswordPage']);
+        Route::get('/verifyEmail', [AuthController::class, 'verifyEmailPage']);
+        Route::post('/verifyEmail/check',[AuthController::class,'checkVerifyCode'])->name('checkVerifyCode');
         Route::post('/login/check', [AuthController::class, 'checkLogin'])->name('checkLogin');
         Route::Post('/forgetPassword/check', [AuthController::class, 'checkEmailorPhone'])->name('checkEmailorPhone');
         Route::post('/recoverPassword', [AuthController::class, 'recoverPassword'])->name('recoverPassword');
@@ -83,14 +86,15 @@ Route::group(
             Route::resource('cart', CartController::class);
             Route::resource('checkout', CheckoutController::class);
             Route::resource('contact', ContactController::class);
-            Route::resource('review', ReveiwController::class);
             Route::resource('shopDetails', ShopDetailsController::class);
             Route::resource('applyCoupon',ApplyCouponContoller::class);
             Route::resource('orders',OrderContoller::class);
             Route::get('/logout',[WebSiteAuthController::class,'logout'])->name('WebsiteLogout');
         });
+        Route::resource('review', ReveiwController::class);
         Route::resource('home', HomeSiteController::class);
         Route::resource('shop', ShopController::class);
+        Route::resource('filter', FilterController::class);
         Route::resource('shopDetails', ShopDetailsController::class);
         Route::resource('customers', CustomerController::class);
         Route::controller(WebSiteAuthController::class)->group(function ()

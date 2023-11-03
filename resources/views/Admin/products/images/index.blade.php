@@ -8,7 +8,7 @@
     <tbody>
     @foreach($images as $image)
     <tr>
-        <td><img src="{{asset("")}}{{$image->image}}" width="150px" height="150px"></td>
+        <td><img src="{{asset("")}}{{$image->image}}" width="75px" height="150px"></td>
         <td>
             <button id="btnEdit" class="btn btn-warning" data-id=" {{$image->id}} ">Edit</button>
             <button id="btnDelete" class="btn btn-danger" data-id=" {{$image->id}}">Delete</button>

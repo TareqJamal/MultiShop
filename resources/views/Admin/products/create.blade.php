@@ -105,7 +105,9 @@
             <input type="file" name="images[]" multiple class="form-control" id="exampleInputEmail1"
                    data-validation="required">
         </div>
+            @if(\Illuminate\Support\Facades\Auth::guard('admin')->check())
             <input hidden name="user_id" value="{{\Illuminate\Support\Facades\Auth::guard('admin')->user()->id}}">
+            @endif
         <div class="modal-footer">
             <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
             <button type="submit" id="btnAdd" class="btn btn-primary">Add</button>

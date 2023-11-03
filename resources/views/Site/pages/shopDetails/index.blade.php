@@ -23,11 +23,9 @@
         <div class="row px-xl-5">
             <div class="col-lg-5 mb-30">
                 <div id="product-carousel" class="carousel slide" data-ride="carousel">
-                    <div class="carousel-inner bg-light">
+                    <div class="owl-carousel related-carousel">
                         @foreach($images as $key=>$image)
-                            <div class="carousel-item {{ $key === 0 ? 'active' : '' }}">
-                                <img class="w-100 h-100" src="{{asset('')}}{{$image->image}}" alt="Image">
-                            </div>
+                                <img width="400px" height="300px" src="{{asset('')}}{{$image->image}}" alt="Image">
                         @endforeach
                     </div>
                     <a class="carousel-control-prev" href="#product-carousel" data-slide="prev">
@@ -54,48 +52,51 @@
                     </div>
                     <h3 class="font-weight-semi-bold mb-4">${{$product->price}}</h3>
                     <p class="mb-4">{{$product->description}}</p>
-                   <form method="Post" action="{{route('cart.store')}}">
-                       @csrf
-                       <input type="hidden" name="product_id" value="{{$product->id ?? ''}}">
-                       <input type="hidden" name="productName" value="{{$product->name ?? ''}}">
-                       <input type="hidden" name="productPrice" value="{{$product->price ?? ''}}">
-                       <input type="hidden" name="productImage" value="{{$product->image ?? ''}}">
-                       <input type="hidden" name="customer_id" value="{{\Illuminate\Support\Facades\Auth::guard('customer')->user()->id ?? ''}}">
-                       <div class="d-flex mb-3">
-                           <strong class="text-dark mr-3">
-                               Sizes:
-                           </strong>
-                           @foreach($sizes as $size)
-                               <div class="custom-control custom-radio custom-control-inline">
-                                   <input type="radio" class="custom-control-input" id="size-{{$size->id}}"
-                                          name="productSize" value="{{$size->name}}">
-                                   <label class="custom-control-label" for="size-{{$size->id}}">{{$size->name}}</label>
-                               </div>
-                           @endforeach
-                       </div>
-                       <div class="d-flex mb-4">
-                           <strong class="text-dark mr-3">
-                               Colors:
-                           </strong>
-                           @foreach($colors as $color)
-                               <div class="custom-control custom-radio custom-control-inline">
-                                   <input type="radio" class="custom-control-input" id="color-{{$color->id}}"
-                                          name="productColor"  value="{{$color->name}}">
-                                   <label class="custom-control-label"
-                                          for="color-{{$color->id}}">{{$color->name}}</label>
-                               </div>
-                           @endforeach
-                       </div>
-                       <div class="d-flex align-items-center mb-4 pt-2">
-                           <div class="input-group quantity mr-3" style="width: 130px;">
-                               <input type="number" class="form-control bg-secondary border-0 text-center" name="productQuantity" value="1">
+                    <form method="Post" action="{{route('cart.store')}}">
+                        @csrf
+                        <input type="hidden" name="product_id" value="{{$product->id ?? ''}}">
+                        <input type="hidden" name="productName" value="{{$product->name ?? ''}}">
+                        <input type="hidden" name="productPrice" value="{{$product->price ?? ''}}">
+                        <input type="hidden" name="productImage" value="{{$product->image ?? ''}}">
+                        <input type="hidden" name="customer_id"
+                               value="{{\Illuminate\Support\Facades\Auth::guard('customer')->user()->id ?? ''}}">
+                        <div class="d-flex mb-3">
+                            <strong class="text-dark mr-3">
+                                Sizes:
+                            </strong>
+                            @foreach($sizes as $size)
+                                <div class="custom-control custom-radio custom-control-inline">
+                                    <input type="radio" class="custom-control-input" id="size-{{$size->id}}"
+                                           name="productSize" value="{{$size->name}}">
+                                    <label class="custom-control-label" for="size-{{$size->id}}">{{$size->name}}</label>
+                                </div>
+                            @endforeach
+                        </div>
+                        <div class="d-flex mb-4">
+                            <strong class="text-dark mr-3">
+                                Colors:
+                            </strong>
+                            @foreach($colors as $color)
+                                <div class="custom-control custom-radio custom-control-inline">
+                                    <input type="radio" class="custom-control-input" id="color-{{$color->id}}"
+                                           name="productColor" value="{{$color->name}}">
+                                    <label class="custom-control-label"
+                                           for="color-{{$color->id}}">{{$color->name}}</label>
+                                </div>
+                            @endforeach
+                        </div>
+                        <div class="d-flex align-items-center mb-4 pt-2">
+                            <div class="input-group quantity mr-3" style="width: 130px;">
+                                <input type="number" class="form-control bg-secondary border-0 text-center"
+                                       name="productQuantity" value="1">
 
-                           </div>
-                           <button type="submit" class="btn btn-primary px-3"><i class="fa fa-shopping-cart mr-1"></i> Add To
-                               Cart
-                           </button>
-                       </div>
-                   </form>
+                            </div>
+                            <button type="submit" class="btn btn-primary px-3"><i class="fa fa-shopping-cart mr-1"></i>
+                                Add To
+                                Cart
+                            </button>
+                        </div>
+                    </form>
                     <div class="d-flex pt-2">
                         <strong class="text-dark mr-2">Share on:</strong>
                         <div class="d-inline-flex">
@@ -182,10 +183,15 @@
                                     <h4 class="mb-4"> Reviews for "{{$product->name}}"</h4>
                                     @foreach($reviews as $review)
                                         <div class="media mb-4">
-                                            <img src="{{asset('')}}{{$review->customers->image}}" alt="Image"
-                                                 class="img-fluid mr-3 mt-1" style="width: 45px;">
+                                            @if(\Illuminate\Support\Facades\Auth::guard('customer')->check())
+                                                <img src="{{asset('')}}{{$review->customers->image}}" alt="Image"
+                                                     class="img-fluid mr-3 mt-1" style="width: 45px;">
+                                            @else
+                                                <img src="{{asset('site')}}/img/user.jpg" alt="Image"
+                                                     class="img-fluid mr-3 mt-1" style="width: 45px;">
+                                            @endif
                                             <div class="media-body">
-                                                <h6>{{$review->customers->firstName}} {{$review->customers->lastName}}
+                                                <h6>{{$review->name}}
                                                     <small> - <i>{{$review->created_at->format('Y-m-d')}}</i></small>
                                                 </h6>
                                                 <div class="text-primary mb-2">
@@ -238,35 +244,38 @@
         <div class="row px-xl-5">
             <div class="col">
                 <div class="owl-carousel related-carousel">
-                    <div class="product-item bg-light">
-                        <div class="product-img position-relative overflow-hidden">
-                            <img class="img-fluid w-100" src="{{asset('site')}}/img/product-1.jpg" alt="">
-                            <div class="product-action">
-                                <a class="btn btn-outline-dark btn-square" href=""><i
-                                        class="fa fa-shopping-cart"></i></a>
-                                <a class="btn btn-outline-dark btn-square" href=""><i class="far fa-heart"></i></a>
-                                <a class="btn btn-outline-dark btn-square" href=""><i class="fa fa-sync-alt"></i></a>
-                                <a class="btn btn-outline-dark btn-square" href=""><i class="fa fa-search"></i></a>
+                    @foreach($anotherProducts as $product)
+                        <div class="product-item bg-light">
+                            <div class="product-img position-relative overflow-hidden">
+                                <img width="200px" height="300px" src="{{asset('')}}{{$product->image}}" alt="">
+                                <div class="product-action">
+                                    <a class="btn btn-outline-dark btn-square" href=""><i
+                                            class="fa fa-shopping-cart"></i></a>
+                                    <a class="btn btn-outline-dark btn-square" href=""><i class="far fa-heart"></i></a>
+                                    <a class="btn btn-outline-dark btn-square" href=""><i
+                                            class="fa fa-sync-alt"></i></a>
+                                    <a class="btn btn-outline-dark btn-square" href=""><i class="fa fa-search"></i></a>
+                                </div>
+                            </div>
+                            <div class="text-center py-4">
+                                <a class="h6 text-decoration-none text-truncate" href="">{{$product->name}}</a>
+                                <div class="d-flex align-items-center justify-content-center mt-2">
+                                    <h5>${{$product->priceAfterDiscount}}</h5>
+                                    <h6 class="text-muted ml-2">
+                                        <del>${{$product->price}}</del>
+                                    </h6>
+                                </div>
+                                <div class="d-flex align-items-center justify-content-center mb-1">
+                                    <small class="fa fa-star text-primary mr-1"></small>
+                                    <small class="fa fa-star text-primary mr-1"></small>
+                                    <small class="fa fa-star text-primary mr-1"></small>
+                                    <small class="fa fa-star text-primary mr-1"></small>
+                                    <small class="fa fa-star text-primary mr-1"></small>
+                                    <small>(99)</small>
+                                </div>
                             </div>
                         </div>
-                        <div class="text-center py-4">
-                            <a class="h6 text-decoration-none text-truncate" href="">Product Name Goes Here</a>
-                            <div class="d-flex align-items-center justify-content-center mt-2">
-                                <h5>$123.00</h5>
-                                <h6 class="text-muted ml-2">
-                                    <del>$123.00</del>
-                                </h6>
-                            </div>
-                            <div class="d-flex align-items-center justify-content-center mb-1">
-                                <small class="fa fa-star text-primary mr-1"></small>
-                                <small class="fa fa-star text-primary mr-1"></small>
-                                <small class="fa fa-star text-primary mr-1"></small>
-                                <small class="fa fa-star text-primary mr-1"></small>
-                                <small class="fa fa-star text-primary mr-1"></small>
-                                <small>(99)</small>
-                            </div>
-                        </div>
-                    </div>
+                    @endforeach
                 </div>
             </div>
         </div>

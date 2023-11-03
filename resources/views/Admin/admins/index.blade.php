@@ -14,6 +14,7 @@
                 <th>Image</th>
                 <th>Email</th>
                 <th>Phone</th>
+                <th>Is Verified</th>
                 <th>Actions</th>
             </tr>
             </thead>
@@ -26,6 +27,7 @@
                 <th>Image</th>
                 <th>Email</th>
                 <th>Phone</th>
+                <th>Is Verified</th>
                 <th>Actions</th>
             </tr>
             </tfoot>
@@ -47,6 +49,7 @@
                     {data: 'image', name: 'image'},
                     {data: 'email', name: 'email'},
                     {data: 'phone', name: 'phone'},
+                    {data: 'is_verified', name: 'is_verified'},
                     {
                         data: 'actions', name: 'actions',
                         orderable: false,

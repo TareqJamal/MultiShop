@@ -7,7 +7,7 @@
             <label for="exampleInputEmail1">Image</label>
         </div>
         <div class="form-group">
-          <img src="{{asset('')}}{{$image->image}}" width="200px" height="200px">
+          <img src="{{asset('')}}{{$image->image}}" width="75px" height="150px">
         </div>
         <div class="form-group">
             <input type="file" name="image"  class="form-control" id="exampleInputEmail1"

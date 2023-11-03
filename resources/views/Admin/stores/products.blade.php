@@ -8,7 +8,6 @@
         <tr>
             <th>#</th>
             <th>Name</th>
-            <th>Description</th>
             <th>Image</th>
             <th>Price $</th>
             <th>Actions</th>
@@ -16,11 +15,10 @@
         </thead>
         <tbody>
         @php($count = 1 )
-        @foreach($products as $product)
+        @foreach($data as $product)
         <tr>
             <td>{{$count++}}</td>
             <td>{{$product->name}}</td>
-            <td>{{$product->description}}</td>
             <td><img src="{{asset('')}}{{$product->image}}" width="100px" height="100px"></td>
             <td>{{$product->price}}</td>
             <td>

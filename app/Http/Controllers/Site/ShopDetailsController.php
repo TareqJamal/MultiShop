@@ -46,13 +46,15 @@ class ShopDetailsController extends Controller
         $colors = Color::all()->where('product_id', $id);
         $images = ProductImage::all()->where('product_id', $id);
         $reviews = Review::all()->where('product_id', $id);
+        $anotherProducts = Product::where('category_id',$product->category_id)->get();
         return view('Site.pages.shopDetails.index')
             ->with([
                 'product' => $product,
                 'sizes' => $sizes,
                 'colors' => $colors,
                 'images' => $images,
-                'reviews' => $reviews
+                'reviews' => $reviews,
+                'anotherProducts'=>$anotherProducts
             ]);
 
     }

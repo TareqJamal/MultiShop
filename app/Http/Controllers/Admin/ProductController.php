@@ -40,11 +40,11 @@ class ProductController extends Controller
                 ->editColumn('image', 'Admin.products.datatable.image')
                 ->addColumn('actions', function ($row) {
                     return
-                        '<button id="btnEdit" class="btn btn-warning" data-id=" ' . $row->id . ' "><i class="fa fa-pencil"></i> Edit</button>
-                         <button id="btnDelete" class="btn btn-danger" data-id=" ' . $row->id . ' "><i class="fa fa-trash"></i> Delete</button>
-                         <button id="btnView" class="btn btn-success" data-id=" ' . $row->id . ' "><i class="fa fa-eye"></i> View</button>
-                         <button id="btnAttributes" class="btn btn-dark" data-id=" ' . $row->id . ' "><i class="fa fa-paperclip"></i> Attributes</button>
-                         <button id="btnImages" class="btn btn-info" data-id=" ' . $row->id . ' "><i class="fa fa-image"></i> Images</button>
+                        '<button id="btnEdit" class="btn btn-warning" data-id=" ' . $row->id . ' "><i class="fa fa-edit"></i> </button>
+                         <button id="btnDelete" class="btn btn-danger" data-id=" ' . $row->id . ' "><i class="fa fa-trash"></i></button>
+                         <button id="btnView" class="btn btn-success" data-id=" ' . $row->id . ' "><i class="fa fa-eye"></i></button>
+                         <button id="btnAttributes" class="btn btn-dark" data-id=" ' . $row->id . ' "><i class="fa fa-paperclip"></i> </button>
+                         <button id="btnImages" class="btn btn-info" data-id=" ' . $row->id . ' "><i class="fa fa-image"></i> </button>
                          ';
                 })
                 ->rawColumns(['actions', 'image'])
@@ -104,7 +104,7 @@ class ProductController extends Controller
                 foreach ($request->sizes_shoes as $size) {
                     Size::create([
                         'name' => $size,
-                        'type' => AttributesTypes::sizeClothes->value,
+                        'type' => AttributesTypes::sizeShoes->value,
                         'product_id' => $product->id
                     ]);
                 }

@@ -25,12 +25,19 @@ class AdminController extends Controller
             return DataTables::of($admins)
                 ->addIndexColumn()
                 ->editColumn('image', 'Admin.admins.datatable.image')
+                ->editColumn('is_verified', function ($row) {
+                    if ($row->is_verified == 1) {
+                        return '<span style="color: green ; font-weight: bold">Yes</span>';
+                    } else {
+                        return '<span style="color: red ; font-weight: bold">No</span>';
+                    }
+                })
                 ->addColumn('actions', function ($row) {
                     return
-                        '<button id="btnEdit" class="btn btn-warning" data-id=" '.$row->id.' ">Edit</button>
-                         <button id="btnDelete" class="btn btn-danger" data-id=" '.$row->id.' ">Delete</button>';
+                        '<button id="btnEdit" class="btn btn-warning" data-id=" ' . $row->id . ' ">Edit</button>
+                         <button id="btnDelete" class="btn btn-danger" data-id=" ' . $row->id . ' ">Delete</button>';
                 })
-                ->rawColumns(['image', 'actions'])
+                ->rawColumns(['image', 'actions','is_verified'])
                 ->toJson();
         } else {
             return view($this->folderPath . 'index');
@@ -84,23 +91,22 @@ class AdminController extends Controller
     /**
      * Show the form for editing the specified resource.
      */
-    public function edit(AdminAction $adminAction ,$id)
+    public function edit(AdminAction $adminAction, $id)
     {
-        if(\request()->ajax())
-        {
+        if (\request()->ajax()) {
             $admin = $adminAction->getAdmin($id);
-            $returnHTMl = view($this->folderPath.'edit')->with(['data'=>$admin])->render();
-            return response()->json(['editForm'=>$returnHTMl]);
+            $returnHTMl = view($this->folderPath . 'edit')->with(['data' => $admin])->render();
+            return response()->json(['editForm' => $returnHTMl]);
         }
     }
 
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, $id , AdminAction $adminAction)
+    public function update(Request $request, $id, AdminAction $adminAction)
     {
         $updatedData = $request->only($this->data);
-        $adminAction->updateAdmin($id , $updatedData);
+        $adminAction->updateAdmin($id, $updatedData);
         return response()->json();
     }
 

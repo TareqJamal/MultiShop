@@ -4,7 +4,9 @@ namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
 use App\Mail\RecoverPasswordEmail;
+use App\Mail\VerifyEmailMail;
 use App\Models\Admin;
+use App\Models\AdminCode;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
@@ -18,12 +20,23 @@ class AuthController extends Controller
         if ($request->role != null)
             if ($request->role == 'employee') {
                 if (Auth::guard('admin')->attempt(['email' => $request->email, 'password' => $request->password])) {
-                    session(['statusAdmin' => true]);
-                    return response()
-                        ->json([
-                            'success' => 'Welcome back , Employee',
-                            'redirect' => route('admins.index')
+                    $admin = Admin::where('email', $request->email)->first();
+                    if ($admin->is_verified == 1) {
+                        session(['statusAdmin' => true]);
+                        return response()
+                            ->json([
+                                'success' => 'Welcome back , Employee',
+                                'redirect' => route('admins.index')
+                            ]);
+                    } else {
+                        $adminCode = AdminCode::create([
+                            'email' => $request->email,
+                            'code' => mt_rand(100000, 999999)
                         ]);
+                        Mail::to($request->email)->send(new VerifyEmailMail($adminCode));
+                        return response()->json(['error' => 'Please verify your email , Go to your inbox']);
+                    }
+
                 } else {
                     return response()
                         ->json([
@@ -64,10 +77,9 @@ class AuthController extends Controller
     {
         $email = $request->email;
         if (Admin::checkEmail($email)) {
-            Mail::to('tareqjamal113@gmail.com')->send(new RecoverPasswordEmail());
+            Mail::to($request->email)->send(new RecoverPasswordEmail());
             return response()->json([
                 'success' => 'Check your Email',
-
             ]);
         } else {
             return response()->json([
@@ -84,16 +96,40 @@ class AuthController extends Controller
 
     public function recoverPassword(Request $request)
     {
-            if ($request->newPassword == $request->confirmPassword) {
-                $admin = Admin::all()->where('email', '=',$request->email)->first();
-                $admin->update(['password'=>Hash::make($request->newPassword)]);
-                return response()->json([
-                    'success' => 'Reset Password done successfully',
-                    'redirect' => route('loginPage')
-                ]);
-            } else {
-                return response()->json(['error' => 'Password Not Match']);
-            }
+        if ($request->newPassword == $request->confirmPassword) {
+            $admin = Admin::all()->where('email', '=', $request->email)->first();
+            $admin->update(['password' => Hash::make($request->newPassword)]);
+            return response()->json([
+                'success' => 'Reset Password done successfully',
+                'redirect' => route('loginPage')
+            ]);
+        } else {
+            return response()->json(['error' => 'Password Not Match']);
+        }
 
+    }
+
+    public function verifyEmailPage()
+    {
+        return view('Admin.auth.verifyEmail');
+    }
+
+    public function checkVerifyCode(Request $request)
+    {
+        $object = AdminCode::where('code', $request->code)->first();
+        if (isset($object)) {
+            $admin = Admin::where('email', $object->email)->first();
+            $admin->is_verified = 1;
+            $admin->save();
+            return response()->json([
+                'success' => 'Email Verifying Success',
+                'redirect' => route('loginPage')
+            ]);
+
+        } else {
+            return response()->json([
+                'error' => 'The Code is Wrong',
+            ]);
+        }
     }
 }

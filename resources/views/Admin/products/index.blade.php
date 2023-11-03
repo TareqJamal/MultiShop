@@ -11,7 +11,6 @@
             <tr>
                 <th>#</th>
                 <th>Name</th>
-                <th>Description</th>
                 <th>Image</th>
                 <th>Price $</th>
                 <th>Actions</th>
@@ -23,7 +22,6 @@
             <tr>
                 <th>#</th>
                 <th>Name</th>
-                <th>Description</th>
                 <th>Image</th>
                 <th>Price $</th>
                 <th>Actions</th>
@@ -44,7 +42,6 @@
                 columns: [
                     {data: 'DT_RowIndex', name: 'DT_RowIndex'},
                     {data: 'name', name: 'name'},
-                    {data: 'description', name: 'description'},
                     {data: 'image', name: 'image'},
                     {data: 'price', name: 'price'},
                     {
