@@ -11,9 +11,9 @@ class Order extends Model
 
     protected $fillable = ['customer_id', 'addressLine_1', 'addressLine_2', 'country', 'city', 'state', 'totalPrice','zipCode', 'status', 'is_paid','paymentMethod'];
 
-    public function customers(): \Illuminate\Database\Eloquent\Relations\HasMany
+    public function customers(): \Illuminate\Database\Eloquent\Relations\BelongsTo
     {
-        return $this->hasMany(Customer::class, 'customer_id');
+        return $this->belongsTo(Customer::class, 'customer_id');
     }
     public function orderDetails(): \Illuminate\Database\Eloquent\Relations\BelongsTo
     {

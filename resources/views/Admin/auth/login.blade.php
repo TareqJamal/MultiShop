@@ -64,7 +64,7 @@
                 <div class="row">
                     <!-- /.col -->
                     <div class="col-4">
-                        <button type="submit" id="btnlogin" class="btn btn-primary btn-block">Sign In</button>
+                        <button type="submit" id="btnlogin" class="btn btn-primary btn-block">LogIn</button>
                     </div>
                     <!-- /.col -->
                     <p class="mb-1">
@@ -117,6 +117,7 @@
                     if(response.error)
                     {
                         toastr.error(response.error);
+                        document.getElementById("btnlogin").innerHTML = 'LogIn';
                     }
 
 

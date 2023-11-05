@@ -10,6 +10,7 @@ use App\Http\Controllers\Admin\CouponController;
 use App\Http\Controllers\Admin\CustomerDashboardContoller;
 use App\Http\Controllers\Admin\ImageController;
 use App\Http\Controllers\Admin\MainController;
+use App\Http\Controllers\Admin\OrderController;
 use App\Http\Controllers\Admin\ProductController;
 use App\Http\Controllers\Admin\ReviewDashboardController;
 use App\Http\Controllers\Admin\SizeController;
@@ -26,6 +27,7 @@ use App\Http\Controllers\Site\HomeSiteController;
 use App\Http\Controllers\Site\OrderContoller;
 use App\Http\Controllers\Site\RegiserController;
 use App\Http\Controllers\Site\ReveiwController;
+use App\Http\Controllers\Site\SearchController;
 use App\Http\Controllers\Site\ShopController;
 use App\Http\Controllers\Site\ShopDetailsController;
 use App\Http\Controllers\Site\WebSiteAuthController;
@@ -59,6 +61,7 @@ Route::group(
             Route::resource('categories', CategoryController::class);
             Route::resource('coupons', CouponController::class);
             Route::resource('products', ProductController::class);
+            Route::resource('ordersDashboard', OrderController::class);
             Route::resource('attributes', AttributeController::class);
             Route::resource('sizes', SizeController::class);
             Route::resource('colors', ColorController::class);
@@ -97,6 +100,7 @@ Route::group(
         Route::resource('filter', FilterController::class);
         Route::resource('shopDetails', ShopDetailsController::class);
         Route::resource('customers', CustomerController::class);
+        Route::resource('search', SearchController::class);
         Route::controller(WebSiteAuthController::class)->group(function ()
         {
             Route::view('/login','Site.pages.auth.login')->name('WebsiteLoginPage');

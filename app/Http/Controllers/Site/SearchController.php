@@ -2,22 +2,19 @@
 
 namespace App\Http\Controllers\Site;
 
-use App\Http\Actions\OrderAction;
 use App\Http\Controllers\Controller;
-use App\Models\Order;
-use App\Models\OrderDetails;
+use App\Models\Product;
+use App\Models\ProductTranslation;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Auth;
 
-class OrderContoller extends Controller
+class SearchController extends Controller
 {
-    public $data = ['customer_id', 'addressLine_1', 'addressLine_2', 'country', 'city', 'state','totalPrice', 'zipCode', 'paymentMethod'];
-
     /**
      * Display a listing of the resource.
      */
     public function index()
     {
+        //
     }
 
     /**
@@ -31,12 +28,14 @@ class OrderContoller extends Controller
     /**
      * Store a newly created resource in storage.
      */
-    public function store(Request $request , OrderAction $action)
+    public function store(Request $request)
     {
-        $postedData = $request->only($this->data);
-        $action->storeOrder($postedData , $request);
-        return response()->json(['success'=>'Order Make Successfully']);
-
+        $query = ProductTranslation::query();
+        $query->when($request->has('name'), function ($query) use ($request) {
+            return $query->where('name', 'like', '%' . $request->name . '%');
+        });
+        $data = $query->get();
+        dd($data);
     }
 
     /**

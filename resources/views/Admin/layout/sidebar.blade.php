@@ -89,6 +89,12 @@
                             </a>
                         </li>
                         <li class="nav-item">
+                            <a href="{{route("ordersDashboard.index")}}" class="nav-link">
+                                <i class="fa fa-shopping-basket nav-icon"></i>
+                                <p>Orders </p>
+                            </a>
+                        </li>
+                        <li class="nav-item">
                             <a href="{{route("carts.index")}}" class="nav-link">
 
                                 <i class="fa fa-cart-arrow-down nav-icon"></i>

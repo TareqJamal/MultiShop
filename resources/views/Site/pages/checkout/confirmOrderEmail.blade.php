@@ -87,9 +87,9 @@
                     </td>
                 </tr>
                 <!-- End address Section -->
-@php $supTotal = 0 @endphp
+ v             @php $supTotal = 0 @endphp
                 <!-- Start product Section -->
-                @foreach($products as $product)
+                @foreach($orderProducts as $product)
                 <tr>
                     <td style="padding-top: 0;">
                         <table width="560" align="center" cellpadding="0" cellspacing="0" border="0" class="devicewidthinner" style="border-bottom: 1px solid #eeeeee;">

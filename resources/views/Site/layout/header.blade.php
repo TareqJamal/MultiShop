@@ -63,13 +63,14 @@
             </a>
         </div>
         <div class="col-lg-4 col-6 text-left">
-            <form action="">
+            <form action="{{route('search.store')}}" method="post">
+                @csrf
                 <div class="input-group">
-                    <input type="text" class="form-control" placeholder="Search for products">
+                    <input type="text" class="form-control" name="name" placeholder="Search for products">
                     <div class="input-group-append">
-                            <span class="input-group-text bg-transparent text-primary">
+                        <button type="submit" class="btn btn-warning">
                                 <i class="fa fa-search"></i>
-                            </span>
+                        </button>
                     </div>
                 </div>
             </form>

@@ -57,11 +57,11 @@ class OrderAction
                 'quantity' => $productQuantities[$key]
             ]);
         }
-        $products = Product::whereIn('id', $products_IDS)->get();
+        $orderProducts = Product::whereIn('id', $products_IDS)->get();
         $cartProducts = Cart::all()->where('customer_id', $customer->id);
         foreach ($cartProducts as $cartProduct) {
             $cartProduct->delete();
         }
-        Mail::to($customer->email)->send(new ConfirmOrder($customer, $order, $products));
+        Mail::to($customer->email)->send(new ConfirmOrder($customer, $order, $orderProducts));
     }
 }
