@@ -2,6 +2,7 @@
 
 namespace App\Http\Actions;
 
+use App\Events\OrderNotification;
 use App\Mail\ConfirmOrder;
 use App\Mail\RecoverPasswordEmail;
 use App\Models\Cart;
@@ -41,6 +42,7 @@ class OrderAction
             $products = Product::whereIn('id', $productIDS)->get();
             Cart::where('customer_id', $customer->id)->whereIn('product_id', $productIDS)->delete();
             Mail::to($customer->email)->send(new ConfirmOrder($customer, $order, $products));
+//            event(new OrderNotification($customer ,$order ));
     }
 
     public function storeMultipleProduct(Request $request , $data): void
@@ -63,5 +65,6 @@ class OrderAction
             $cartProduct->delete();
         }
         Mail::to($customer->email)->send(new ConfirmOrder($customer, $order, $orderProducts));
+//        event(new OrderNotification($customer ,$order ));
     }
 }

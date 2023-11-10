@@ -10,6 +10,7 @@
     @include('Admin.Includes.css')
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@10.16.6/dist/sweetalert2.all.min.js"></script>
     <link rel='stylesheet' href='https://cdn.jsdelivr.net/npm/sweetalert2@10.10.1/dist/sweetalert2.min.css'>
+
 </head>
 <body class="hold-transition sidebar-mini layout-fixed">
 <div class="wrapper">
@@ -74,6 +75,23 @@
 <!-- jQuery -->
 @include('Admin.Includes.js')
 @yield('js')
-
+<script src="https://js.pusher.com/8.2.0/pusher.min.js"></script>
+<script>
+    // Enable pusher logging - don't include this in production
+    Pusher.logToConsole = true;
+    var pusher = new Pusher('69151170a40aa31b3ffb', {
+        cluster: 'eu'
+    });
+    var channel = pusher.subscribe('my-channel');
+    channel.bind('my-event', function(data) {
+        var customerName = data.customer.firstName;
+        var orderId = data.order.id;
+        Swal.fire(
+            'Confirmed Order',
+            'Customer : ' + customerName + " " + 'Order Number :' + orderId,
+            'success'
+        )
+    });
+</script>
 </body>
 </html>

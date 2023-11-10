@@ -2,6 +2,8 @@
 
 namespace App\Http\Controllers\Site;
 
+use App\Enum\OrderTypes;
+use App\Events\OrderNotification;
 use App\Http\Actions\OrderAction;
 use App\Http\Controllers\Controller;
 use App\Models\Order;
@@ -11,7 +13,7 @@ use Illuminate\Support\Facades\Auth;
 
 class OrderContoller extends Controller
 {
-    public $data = ['customer_id', 'addressLine_1', 'addressLine_2', 'country', 'city', 'state','totalPrice', 'zipCode', 'paymentMethod'];
+    public $data = ['customer_id', 'addressLine_1', 'addressLine_2', 'country', 'city', 'state', 'totalPrice', 'zipCode', 'paymentMethod'];
 
     /**
      * Display a listing of the resource.
@@ -31,11 +33,11 @@ class OrderContoller extends Controller
     /**
      * Store a newly created resource in storage.
      */
-    public function store(Request $request , OrderAction $action)
+    public function store(Request $request, OrderAction $action)
     {
         $postedData = $request->only($this->data);
-        $action->storeOrder($postedData , $request);
-        return response()->json(['success'=>'Order Make Successfully']);
+        $action->storeOrder($postedData, $request);
+        return response()->json(['success' => 'Order Make Successfully']);
 
     }
 
@@ -44,7 +46,10 @@ class OrderContoller extends Controller
      */
     public function show(string $id)
     {
-        //
+        $order = Order::findorfail($id);
+        $order->status = OrderTypes::Canceled->value;
+        $order->save();
+        return redirect(route('home.index'));
     }
 
     /**
@@ -52,7 +57,12 @@ class OrderContoller extends Controller
      */
     public function edit(string $id)
     {
-        //
+        $customer = Auth::guard('customer')->user();
+        $order = Order::findorfail($id);
+        $order->status = OrderTypes::Confirmed->value;
+        $order->save();
+        event(new OrderNotification($customer, $order));
+        return redirect(route('initiatePayment', $id));
     }
 
     /**

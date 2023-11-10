@@ -17,7 +17,7 @@
             </div>
             <div class="info">
                 @if(\Illuminate\Support\Facades\Session::has('statusAdmin'))
-                <a href="#" class="d-block">{{\Illuminate\Support\Facades\Auth::guard('admin')->user()->name}}</a>
+                    <a href="#" class="d-block">{{\Illuminate\Support\Facades\Auth::guard('admin')->user()->name}}</a>
                 @elseif(\Illuminate\Support\Facades\Session::has('statusSuper'))
                     <a href="#" class="d-block">{{\Illuminate\Support\Facades\Auth::guard('web')->user()->name}}</a>
                 @endif
@@ -38,13 +38,14 @@
                                 <p>Main</p>
                             </a>
                         </li>
-                        <li class="nav-item">
-                            <a href="{{route('admins.index')}}" class="nav-link">
-                                <i class="fa fa-people-carry nav-icon"></i>
-
-                                <p>Admins</p>
-                            </a>
-                        </li>
+                        @if(!\Illuminate\Support\Facades\Auth::guard('admin')->check())
+                            <li class="nav-item">
+                                <a href="{{route('admins.index')}}" class="nav-link">
+                                    <i class="fa fa-people-carry nav-icon"></i>
+                                    <p>Admins</p>
+                                </a>
+                            </li>
+                        @endif
                         <li class="nav-item">
                             <a href="{{route('customersDashboard.index')}}" class="nav-link">
                                 <i class="far fa-user nav-icon"></i>

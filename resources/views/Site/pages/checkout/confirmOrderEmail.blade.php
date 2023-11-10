@@ -171,8 +171,8 @@
                 </tr>
                 <tr>
                    <td>
-                       <button type="button" class="btn btn-success">Confirm Order</button>
-                       <button type="button" class="btn btn-danger">Cancel Order</button>
+                       <a href="{{route('orders.edit',$order->id)}}">  <button type="button"  class="btn btn-success">Confirm Order</button> </a>
+                       <a href="{{route('orders.show',$order->id)}}">   <button type="button"  class="btn btn-danger">Cancel Order</button></a>
                    </td>
                 </tr>
                 <!-- End payment method Section -->

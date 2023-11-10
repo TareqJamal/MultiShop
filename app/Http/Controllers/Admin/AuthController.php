@@ -26,7 +26,7 @@ class AuthController extends Controller
                         return response()
                             ->json([
                                 'success' => 'Welcome back , Employee',
-                                'redirect' => route('admins.index')
+                                'redirect' => route('main.index')
                             ]);
                     } else {
                         $adminCode = AdminCode::create([
@@ -49,7 +49,7 @@ class AuthController extends Controller
                     return response()
                         ->json([
                             'success' => 'Welcome back , Manager',
-                            'redirect' => route('admins.index')
+                            'redirect' => route('main.index')
                         ]);
                 } else {
                     return response()

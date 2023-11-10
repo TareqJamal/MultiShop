@@ -11,6 +11,7 @@ use App\Http\Controllers\Admin\CustomerDashboardContoller;
 use App\Http\Controllers\Admin\ImageController;
 use App\Http\Controllers\Admin\MainController;
 use App\Http\Controllers\Admin\OrderController;
+use App\Http\Controllers\Admin\PaymentController;
 use App\Http\Controllers\Admin\ProductController;
 use App\Http\Controllers\Admin\ReviewDashboardController;
 use App\Http\Controllers\Admin\SizeController;
@@ -108,6 +109,10 @@ Route::group(
             Route::post('/check','checkLogin')->name('WebsiteCheckLogin');
         });
     });
+    Route::view('/payment/status','Admin.paymentStatus')->name('paymentStatus');
+    Route::get('/payment/{id}', [PaymentController::class,'initiatePayment'])->name('initiatePayment');
+    Route::get('/callBack',[PaymentController::class,'callBack']);
+
 
 
 
